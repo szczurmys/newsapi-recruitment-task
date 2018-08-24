@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.github.szczurmys.recruitmenttask</groupId>
+    <artifactId>newsapi-recruitment-task</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+
+    <packaging>pom</packaging>
+
+    <name>newsapi-recruitment-task</name>
+    <description>Project for recruitment task.</description>
+    <url>https://github.com/szczurmys/newsapi-recruitment-task</url>
+
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>Jakub Goszczurny</name>
+            <url>https://github.com/szczurmys</url>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:ssh://git@github.com:/szczurmys/newsapi-recruitment-task.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com:/szczurmys/newsapi-recruitment-task.git</developerConnection>
+        <url>https://github.com/szczurmys/newsapi-recruitment-task</url>
+        <tag>HEAD</tag>
+    </scm>
+
+    <modules>
+        <module>api-newsapi-recruitment-task</module>
+    </modules>
+
+    <build>
+        <extensions>
+            <extension>
+                <groupId>com.spotify</groupId>
+                <artifactId>dockerfile-maven-extension</artifactId>
+                <version>1.4.3</version>
+            </extension>
+        </extensions>
+        <plugins>
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>dockerfile-maven-plugin</artifactId>
+                <version>1.4.4</version>
+                <inherited>true</inherited>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
