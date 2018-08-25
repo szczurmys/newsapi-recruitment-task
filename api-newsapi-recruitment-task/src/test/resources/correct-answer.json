@@ -1,0 +1,30 @@
+{
+  "status":"ok",
+  "totalResults":2,
+  "articles":[
+    {
+      "source":{
+        "id":null,
+        "name":"github.com/szczurmys"
+      },
+      "author":"szczurmys",
+      "title":"test article 1",
+      "description":"Some description &#132;to&#324; test 1 &#148;.",
+      "url":"https://github.com/szczurmys/newsapi-recruitment-task",
+      "urlToImage":"https://avatars3.githubusercontent.com/u/4983958?s=40&v=4",
+      "publishedAt":"2018-08-24T16:20:00Z"
+    },
+    {
+      "source":{
+        "id":null,
+        "name":"github.com/szczurmys"
+      },
+      "author":null,
+      "title":"test article 2",
+      "description":"Some description &#132;to&#324; test 2 &#148;.",
+      "url":"https://github.com/szczurmys/newsapi-recruitment-task",
+      "urlToImage":"https://avatars3.githubusercontent.com/u/4983958?s=40&v=4",
+      "publishedAt":"2017-09-24T15:21:17Z"
+    }
+  ]
+}
