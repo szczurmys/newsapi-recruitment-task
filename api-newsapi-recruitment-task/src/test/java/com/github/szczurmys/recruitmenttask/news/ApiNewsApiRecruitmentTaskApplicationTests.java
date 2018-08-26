@@ -2,10 +2,10 @@ package com.github.szczurmys.recruitmenttask.news;
 
 import com.github.szczurmys.recruitmenttask.IntegrationTestCategory;
 import com.github.szczurmys.recruitmenttask.news.builder.ArticleDtoBuilderForTests;
-import com.github.szczurmys.recruitmenttask.news.model.ArticleDto;
 import com.github.szczurmys.recruitmenttask.news.model.ArticlesDto;
-import com.github.szczurmys.recruitmenttask.news.newsapi.client.NewsApiWireMockConfiguration;
+import com.github.szczurmys.recruitmenttask.news.client.NewsApiWireMockConfiguration;
 import com.github.tomakehurst.wiremock.WireMockServer;
+import com.github.tomakehurst.wiremock.http.Fault;
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
 import com.revinate.assertj.json.JsonPathAssert;
@@ -20,8 +20,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import java.net.MalformedURLException;
-import java.net.URL;
-import java.time.LocalDate;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -45,11 +43,12 @@ public class ApiNewsApiRecruitmentTaskApplicationTests {
         //given
         String country = "pl";
         String category = "technology";
-        String apiKey = "api0123456789key";
+        String apiKey = "test-token";
 
-        mockServer.stubFor(get(urlEqualTo(String.format("/v2/top-headlines?country=%s&category=%s&apiKey=%s",
-                country, category, apiKey)))
+        mockServer.stubFor(get(urlEqualTo(String.format("/v2/top-headlines?country=%s&category=%s",
+                country, category)))
                 .withHeader("Accept", equalTo(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .withHeader("Authorization", equalTo("Bearer " + apiKey))
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withHeader("Content-Type", MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -80,11 +79,12 @@ public class ApiNewsApiRecruitmentTaskApplicationTests {
         //given
         String country = "pl";
         String category = "technology";
-        String apiKey = "api0123456789key";
+        String apiKey = "test-token";
 
-        mockServer.stubFor(get(urlEqualTo(String.format("/v2/top-headlines?country=%s&category=%s&apiKey=%s",
-                country, category, apiKey)))
+        mockServer.stubFor(get(urlEqualTo(String.format("/v2/top-headlines?country=%s&category=%s",
+                country, category)))
                 .withHeader("Accept", equalTo(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .withHeader("Authorization", equalTo("Bearer " + apiKey))
                 .willReturn(aResponse()
                         .withStatus(400)
                         .withHeader("Content-Type", MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -104,8 +104,37 @@ public class ApiNewsApiRecruitmentTaskApplicationTests {
 
         DocumentContext actualBody = JsonPath.parse(actual.expectBody(String.class).returnResult().getResponseBody());
 
-        JsonPathAssert.assertThat(actualBody).jsonPathAsString("$.message").isEqualTo("Unknown error from external api.");
+        JsonPathAssert.assertThat(actualBody).jsonPathAsString("$.message").isEqualTo("Description.");
         JsonPathAssert.assertThat(actualBody).jsonPathAsString("$.code").isEqualTo("errorFromExternalApi");
         JsonPathAssert.assertThat(actualBody).jsonPathAsString("$.externalCode").isEqualTo("someError");
+    }
+
+    @Test
+    public void should_return_error_when_news_api_connection_return_connection_exception() throws MalformedURLException {
+        //given
+        String country = "pl";
+        String category = "technology";
+        String apiKey = "test-token";
+
+        mockServer.stubFor(get(urlEqualTo(String.format("/v2/top-headlines?country=%s&category=%s",
+                country, category)))
+                .withHeader("Accept", equalTo(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .withHeader("Authorization", equalTo("Bearer " + apiKey))
+                .willReturn(aResponse()
+                        .withFault(Fault.MALFORMED_RESPONSE_CHUNK))
+        );
+        //when
+        WebTestClient.ResponseSpec actual = webTestClient
+                .get().uri("/news/{country}/{category}", country, category)
+                .accept(MediaType.APPLICATION_JSON_UTF8)
+                .exchange();
+
+        //then
+        actual.expectStatus().is5xxServerError();
+
+        DocumentContext actualBody = JsonPath.parse(actual.expectBody(String.class).returnResult().getResponseBody());
+
+        JsonPathAssert.assertThat(actualBody).jsonPathAsString("$.message").isEqualTo("Connection closed prematurely");
+        JsonPathAssert.assertThat(actualBody).jsonPathAsString("$.code").isEqualTo("unknownError");
     }
 }

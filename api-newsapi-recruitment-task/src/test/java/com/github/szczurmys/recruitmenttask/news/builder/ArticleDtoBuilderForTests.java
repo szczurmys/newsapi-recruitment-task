@@ -26,6 +26,7 @@ public class ArticleDtoBuilderForTests {
 
     public static ArticleDto filledArticle2() {
         return filled()
+                .setAuthor(null)
                 .setTitle("test article 2")
                 .setDescription("Some description &#132;to&#324; test 2 &#148;.")
                 .setDate(LocalDate.of(2017, 9, 24));
