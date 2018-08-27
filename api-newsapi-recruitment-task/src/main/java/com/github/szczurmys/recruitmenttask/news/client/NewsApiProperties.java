@@ -7,7 +7,7 @@ import java.util.Optional;
 
 @Configuration
 @ConfigurationProperties(prefix = "newsapi")
-class NewsApiConfiguration {
+class NewsApiProperties {
 
     private String newsApiUrl = "https://newsapi.org";
 
@@ -17,7 +17,7 @@ class NewsApiConfiguration {
         return newsApiUrl;
     }
 
-    public NewsApiConfiguration setNewsApiUrl(String newsApiUrl) {
+    public NewsApiProperties setNewsApiUrl(String newsApiUrl) {
         this.newsApiUrl = newsApiUrl;
         return this;
     }
@@ -26,7 +26,7 @@ class NewsApiConfiguration {
         return Optional.ofNullable(authToken).map(String::trim).filter(v -> !v.isEmpty());
     }
 
-    public NewsApiConfiguration setAuthToken(String authToken) {
+    public NewsApiProperties setAuthToken(String authToken) {
         this.authToken = authToken;
         return this;
     }

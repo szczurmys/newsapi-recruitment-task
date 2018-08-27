@@ -23,12 +23,12 @@ public class NewsApiRestClient implements NewsClient {
     private static final Logger logger = LoggerFactory.getLogger(NewsApiRestClient.class);
 
     private WebClient client;
-    private NewsApiConfiguration configuration;
+    private NewsApiProperties configuration;
     private ObjectMapper objectMapper;
 
     @Autowired
     public NewsApiRestClient(@Qualifier("newsApiWebClient") WebClient client,
-                             NewsApiConfiguration configuration,
+                             NewsApiProperties configuration,
                              ObjectMapper objectMapper) {
         this.client = client;
         this.configuration = configuration;
