@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,7 +33,7 @@ public class NewsController {
         this.articleMapper = articleMapper;
     }
 
-    @GetMapping("/news/{country}/{category}")
+    @GetMapping(value = "/news/{country}/{category}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Mono<ResponseEntity<ArticlesDto>> getArticles(
             @PathVariable(value = "country") final String country,
             @PathVariable(value = "category") final String category

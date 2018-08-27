@@ -17,8 +17,8 @@ public class NewsApiWireMockConfiguration {
 
     @Bean
     @Primary
-    public NewsApiConfiguration createConfiguration(WireMockServer server) {
-        NewsApiConfiguration conf = new NewsApiConfiguration();
+    public NewsApiProperties createConfiguration(WireMockServer server) {
+        NewsApiProperties conf = new NewsApiProperties();
         conf.setNewsApiUrl("http://localhost:" + server.port());
         conf.setAuthToken("test-token");
         return conf;

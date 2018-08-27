@@ -8,7 +8,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 class NewsApiRestConfig {
 
     @Bean(name = "newsApiWebClient")
-    public WebClient createGithubRestClient(NewsApiConfiguration configuration) {
+    public WebClient createGithubRestClient(NewsApiProperties configuration) {
         return WebClient.create(configuration.getNewsApiUrl());
     }
 }

@@ -2,9 +2,7 @@ package com.github.szczurmys.recruitmenttask.news.client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.szczurmys.recruitmenttask.IntegrationTestCategory;
-import com.github.szczurmys.recruitmenttask.news.ApiNewsApiRecruitmentTaskApplication;
 import com.github.szczurmys.recruitmenttask.news.builder.NewsApiArticleBuilderForTests;
-import com.github.szczurmys.recruitmenttask.news.client.model.NewsApiArticle;
 import com.github.szczurmys.recruitmenttask.news.client.model.NewsApiResponse;
 import com.github.szczurmys.recruitmenttask.news.exceptions.ErrorCode;
 import com.github.szczurmys.recruitmenttask.news.exceptions.NewsApiClientException;
@@ -14,15 +12,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Mono;
 
 import java.util.Optional;
 
@@ -44,7 +39,7 @@ public class NewsApiRestClientTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    private NewsApiConfiguration configuration = mock(NewsApiConfiguration.class);
+    private NewsApiProperties configuration = mock(NewsApiProperties.class);
 
     private NewsApiRestClient subject;
 
