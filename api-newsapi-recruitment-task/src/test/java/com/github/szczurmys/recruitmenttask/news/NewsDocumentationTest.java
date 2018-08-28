@@ -22,6 +22,7 @@ import org.springframework.restdocs.JUnitRestDocumentation;
 import org.springframework.restdocs.operation.OperationResponse;
 import org.springframework.restdocs.operation.preprocess.OperationResponsePreprocessor;
 import org.springframework.restdocs.operation.preprocess.Preprocessors;
+import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Mono;
@@ -119,24 +120,35 @@ public class NewsDocumentationTest {
                                                 "business entertainment general health science sports technology")
                                 ),
                                 responseFields(
-                                        fieldWithPath("country").description("The country from which news are"),
-                                        fieldWithPath("category").description("The category from which news are"),
+                                        fieldWithPath("country")
+                                                .type(JsonFieldType.STRING)
+                                                .description("The country from which news are"),
+                                        fieldWithPath("category")
+                                                .type(JsonFieldType.STRING)
+                                                .description("The category from which news are"),
                                         fieldWithPath("articles.[]")
+                                                .type(JsonFieldType.ARRAY)
                                                 .description("News for the specified country and category."),
                                         fieldWithPath("articles.[].author")
                                                 .optional()
                                                 .description("Author of the news."),
                                         fieldWithPath("articles.[].title")
+                                                .type(JsonFieldType.STRING)
                                                 .description("Title of the news."),
                                         fieldWithPath("articles.[].description")
+                                                .type(JsonFieldType.STRING)
                                                 .description("News content."),
                                         fieldWithPath("articles.[].date")
+                                                .type(JsonFieldType.STRING + "(yyyy-MM-dd)")
                                                 .description("The date of the news."),
                                         fieldWithPath("articles.[].sourceName")
+                                                .type(JsonFieldType.STRING)
                                                 .description("The source name of the news."),
                                         fieldWithPath("articles.[].articleUrl")
+                                                .type(JsonFieldType.STRING)
                                                 .description("URL address of the news."),
                                         fieldWithPath("articles.[].imageUrl")
+                                                .type(JsonFieldType.STRING)
                                                 .description("URL image of the news.")
 
                                 )
@@ -171,8 +183,12 @@ public class NewsDocumentationTest {
                                     }
                                 },
                                 responseFields(
-                                        fieldWithPath("message").description("Message of the error."),
-                                        fieldWithPath("code").description("Code of the error.")
+                                        fieldWithPath("message")
+                                                .type(JsonFieldType.STRING)
+                                                .description("Message of the error."),
+                                        fieldWithPath("code")
+                                                .type(JsonFieldType.STRING)
+                                                .description("Code of the error.")
                                 )
                         )
                 );
@@ -206,9 +222,15 @@ public class NewsDocumentationTest {
                                     }
                                 },
                                 responseFields(
-                                        fieldWithPath("message").description("Message of the error."),
-                                        fieldWithPath("code").description("Code of the error."),
-                                        fieldWithPath("externalCode").description("NewsAPI code of the error.")
+                                        fieldWithPath("message")
+                                                .type(JsonFieldType.STRING)
+                                                .description("Message of the error."),
+                                        fieldWithPath("code")
+                                                .type(JsonFieldType.STRING)
+                                                .description("Code of the error."),
+                                        fieldWithPath("externalCode")
+                                                .type(JsonFieldType.STRING)
+                                                .description("NewsAPI code of the error.")
                                 )
                         )
                 );
@@ -240,8 +262,12 @@ public class NewsDocumentationTest {
                                     }
                                 },
                                 responseFields(
-                                        fieldWithPath("message").description("Message of the error."),
-                                        fieldWithPath("code").description("Code of the error.")
+                                        fieldWithPath("message")
+                                                .type(JsonFieldType.STRING)
+                                                .description("Message of the error."),
+                                        fieldWithPath("code")
+                                                .type(JsonFieldType.STRING)
+                                                .description("Code of the error.")
                                 )
                         )
                 );
