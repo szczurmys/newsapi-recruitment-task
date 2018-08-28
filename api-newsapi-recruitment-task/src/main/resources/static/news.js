@@ -11,6 +11,9 @@ $(document).ready(function() {
         var linkCat = $('<a href="#">' + element + '</a>');
         linkCat.click(function(event) {
             downloadNews(DEFAULT_COUNTRY, $(event.target).text());
+
+            event.preventDefault();
+            return false;
         });
 
         var list = $('<li></li>');
@@ -36,8 +39,10 @@ function downloadNews(country, category) {
                $('#newsContent').append('<hr />');
                $('#newsContent').append('<p>Posted on ' + element.date + '</p>');
                $('#newsContent').append('<hr />');
-               $('#newsContent').append('<img style="text-align:center; vertical-align:middle; max-width:900px; max-height:300px;" class="img-fluid rounded" src="' + element.imageUrl + '" alt="">');
-               $('#newsContent').append('<hr />');
+               if(element.imageUrl != null) {
+                   $('#newsContent').append('<img style="text-align:center; vertical-align:middle; max-width:900px; max-height:300px;" class="img-fluid rounded" src="' + element.imageUrl + '" alt="">');
+                   $('#newsContent').append('<hr />');
+               }
 
 
                $('#newsContent').append(element.description);
