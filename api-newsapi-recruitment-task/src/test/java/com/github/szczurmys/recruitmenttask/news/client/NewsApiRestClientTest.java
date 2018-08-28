@@ -1,7 +1,7 @@
 package com.github.szczurmys.recruitmenttask.news.client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.szczurmys.recruitmenttask.IntegrationTestCategory;
+import com.github.szczurmys.recruitmenttask.news.JacksonConfig;
 import com.github.szczurmys.recruitmenttask.news.builder.NewsApiArticleBuilderForTests;
 import com.github.szczurmys.recruitmenttask.news.client.model.NewsApiResponse;
 import com.github.szczurmys.recruitmenttask.news.exceptions.ErrorCode;
@@ -10,7 +10,6 @@ import com.github.szczurmys.recruitmenttask.news.exceptions.RecruitmentTaskExcep
 import com.github.tomakehurst.wiremock.WireMockServer;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -23,14 +22,13 @@ import java.util.Optional;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @SpringBootApplication
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = {NewsApiRestClientTest.class, NewsApiWireMockConfiguration.class, JacksonConfig.class})
-@Category(IntegrationTestCategory.class)
+@SpringBootTest(classes = {NewsApiRestClientTest.class, NewsApiWireMockConfiguration.class, JacksonConfig.class},
+        webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class NewsApiRestClientTest {
 
     @Autowired

@@ -20,7 +20,7 @@ import reactor.core.publisher.Mono;
 
 import java.util.Map;
 
-@RestController()
+@RestController
 public class NewsController {
     private static final Logger logger = LoggerFactory.getLogger(NewsController.class);
 
@@ -33,7 +33,8 @@ public class NewsController {
         this.articleMapper = articleMapper;
     }
 
-    @GetMapping(value = "/news/{country}/{category}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(value = "/news/{country}/{category}",
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Mono<ResponseEntity<ArticlesDto>> getArticles(
             @PathVariable(value = "country") final String country,
             @PathVariable(value = "category") final String category
