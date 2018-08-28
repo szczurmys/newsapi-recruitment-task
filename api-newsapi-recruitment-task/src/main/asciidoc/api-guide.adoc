@@ -57,21 +57,33 @@ A `GET` request is used to read news.
 
 include::{snippets}/news/http-request.adoc[]
 
+==== Path parameters
+
+include::{snippets}/news/path-parameters.adoc[]
+
 ==== Example response
 
 include::{snippets}/news/http-response.adoc[]
+
+include::{snippets}/news/response-fields.adoc[]
 
 ==== Example server error
 
 include::{snippets}/news-server-error/http-response.adoc[]
 
+include::{snippets}/news-server-error/response-fields.adoc[]
+
 ==== Example NewsApi error
 
 include::{snippets}/news-newsapi-error/http-response.adoc[]
 
+include::{snippets}/news-newsapi-error/response-fields.adoc[]
+
 ==== Example unknown error
 
 include::{snippets}/news-unknown-error/http-response.adoc[]
+
+include::{snippets}/news-unknown-error/response-fields.adoc[]
 
 
 ==== CURL request
