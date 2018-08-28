@@ -1,0 +1,84 @@
+= RESTful Notes API Guide
+Baeldung;
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+:sectlinks:
+
+[[overview]]
+= Overview
+
+[[overview-http-verbs]]
+== HTTP verbs
+
+RESTful notes tries to adhere as closely as possible to standard HTTP and REST conventions in its
+use of HTTP verbs.
+
+|===
+| Verb | Usage
+
+| `GET`
+| Used to retrieve a resource
+|===
+
+RESTful notes tries to adhere as closely as possible to standard HTTP and REST conventions in its
+use of HTTP status codes.
+
+|===
+| Status code | Usage
+
+| `200 OK`
+| The request completed successfully
+
+| `400 Bad Request`
+| The request was malformed. The response body will include an error providing further information
+
+| `500 Internal Server Error`
+| A generic error message, given when an unexpected condition was encountered and no more specific message is suitable.
+|===
+
+
+[[resources]]
+= Resources
+
+[[resources-News]]
+== News REST Service
+
+The News provides the entry point into the service getting news.
+
+[[resources-news-get]]
+=== Accessing the News GET
+
+A `GET` request is used to read news.
+
+==== Request structure
+
+include::{snippets}/news/http-request.adoc[]
+
+==== Example response
+
+include::{snippets}/news/http-response.adoc[]
+
+==== Example server error
+
+include::{snippets}/news-server-error/http-response.adoc[]
+
+==== Example NewsApi error
+
+include::{snippets}/news-newsapi-error/http-response.adoc[]
+
+==== Example unknown error
+
+include::{snippets}/news-unknown-error/http-response.adoc[]
+
+
+==== CURL request
+
+include::{snippets}/news/curl-request.adoc[]
+
+[[resources-news-post]]
+
+
+
