@@ -1,8 +1,10 @@
 Proxy NewsAPI - Project for recruitment task.
 ---------------------------------------------
 
-1. Build project <br />
+1. Build project and generate REST Docs<br />
 `mvn clean package`
+1. Build project, generate REST Docs and run integration tests<br />
+`mvn clean verify`
 3. Run application in console <br />
 `java -jar api-newsapi-recruitment-task/target/api-newsapi-recruitment-task-0.0.1-SNAPSHOT.jar <options>` <br />
 Options:
