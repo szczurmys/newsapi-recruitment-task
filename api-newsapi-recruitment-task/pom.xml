@@ -180,6 +180,43 @@
 					</buildArgs>
 				</configuration>
 			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<inherited>true</inherited>
+				<configuration>
+					<skip>true</skip>
+					<includes>
+						<include>**/*Test.java</include>
+						<include>**/*Documentation.java</include>
+					</includes>
+				</configuration>
+				<executions>
+					<execution>
+						<id>surefire-t</id>
+						<phase>test</phase>
+						<goals>
+							<goal>test</goal>
+						</goals>
+						<configuration>
+							<skip>false</skip>
+							<excludedGroups>com.github.szczurmys.recruitmenttask.IntegrationTestCategory</excludedGroups>
+						</configuration>
+					</execution>
+					<execution>
+						<id>surefire-it</id>
+						<phase>integration-test</phase>
+						<goals>
+							<goal>test</goal>
+						</goals>
+						<configuration>
+							<skip>false</skip>
+							<groups>com.github.szczurmys.recruitmenttask.IntegrationTestCategory</groups>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 

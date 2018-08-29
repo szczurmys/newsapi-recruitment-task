@@ -13,7 +13,11 @@ public class JacksonConfig {
     @Primary
     public ObjectMapper objectMapper(Jackson2ObjectMapperBuilder builder) {
         ObjectMapper objectMapper = builder.createXmlMapper(false).build();
-        objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+        objectMapper = configureObjectMapper(objectMapper);
         return objectMapper;
+    }
+
+    public static ObjectMapper configureObjectMapper(ObjectMapper objectMapper) {
+        return objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
     }
 }

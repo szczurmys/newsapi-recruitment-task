@@ -1,5 +1,6 @@
 package com.github.szczurmys.recruitmenttask.news;
 
+import com.github.szczurmys.recruitmenttask.IntegrationTestCategory;
 import com.github.szczurmys.recruitmenttask.news.client.NewsClient;
 import com.github.szczurmys.recruitmenttask.news.client.model.NewsApiResponse;
 import com.github.szczurmys.recruitmenttask.news.exceptions.ErrorCode;
@@ -10,6 +11,7 @@ import com.github.szczurmys.recruitmenttask.news.model.ArticlesDto;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -42,8 +44,8 @@ import static org.springframework.restdocs.webtestclient.WebTestClientRestDocume
 
 @SpringBootApplication
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = {NewsDocumentationTest.class, NewsController.class}, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class NewsDocumentationTest {
+@SpringBootTest(classes = {NewsDocumentation.class, NewsController.class}, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+public class NewsDocumentation {
 
     @Rule
     public final JUnitRestDocumentation restDocumentation = new JUnitRestDocumentation();

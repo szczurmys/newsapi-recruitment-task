@@ -1,5 +1,6 @@
 package com.github.szczurmys.recruitmenttask.news;
 
+import com.github.szczurmys.recruitmenttask.IntegrationTestCategory;
 import com.github.szczurmys.recruitmenttask.news.builder.ArticleDtoBuilderForTests;
 import com.github.szczurmys.recruitmenttask.news.model.ArticlesDto;
 import com.github.szczurmys.recruitmenttask.news.client.NewsApiWireMockConfiguration;
@@ -9,6 +10,7 @@ import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
 import com.revinate.assertj.json.JsonPathAssert;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,12 +23,14 @@ import java.net.MalformedURLException;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(
         classes = {ApiNewsApiRecruitmentTaskApplication.class},
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Import(NewsApiWireMockConfiguration.class)
+@Category(IntegrationTestCategory.class)
 public class ApiNewsApiRecruitmentTaskApplicationTest {
 
     @Autowired
