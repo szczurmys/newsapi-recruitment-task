@@ -30,6 +30,9 @@ function downloadNews(country, category) {
     }).then(function(data) {
            $('#newsContent').empty();
 
+           $('#newsContent').append('<h1 class="mt-4">Category: ' + category + '</h1>');
+           $('#newsContent').append('<hr />');
+
            data.articles.forEach(function (element, index, array){
 
                var author = (element.author == null ? "" : element.author + " - ") + element.sourceName;
