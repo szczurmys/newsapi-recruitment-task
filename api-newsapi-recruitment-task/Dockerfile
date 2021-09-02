@@ -1,4 +1,4 @@
-FROM openjdk:10
+FROM eclipse-temurin:11
 MAINTAINER Jakub Goszczurny <szczurmys@o2.pl>
 
 ARG JAR_FILE
@@ -16,3 +16,5 @@ CMD if [ ! -z "${NEWSAPI_API_URL}" ]; then URL_PARAM="--newsapi.newsApiUrl=${NEW
     java -jar ./api-newsapi-recruitment-task.jar ${URL_PARAM} ${TOKEN_PARAM}
 
 EXPOSE 8080
+
+USER 9999

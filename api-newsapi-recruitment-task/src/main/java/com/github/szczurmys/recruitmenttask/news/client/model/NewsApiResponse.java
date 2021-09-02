@@ -55,11 +55,10 @@ public class NewsApiResponse {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("NewsApiResponse{");
-        sb.append("status='").append(status).append('\'');
-        sb.append(", totalResults=").append(totalResults);
-        sb.append(", articles=").append(articles);
-        sb.append('}');
-        return sb.toString();
+        return "NewsApiResponse{" +
+                "status='" + status + '\'' +
+                ", totalResults=" + totalResults +
+                ", articles=" + articles +
+                '}';
     }
 }

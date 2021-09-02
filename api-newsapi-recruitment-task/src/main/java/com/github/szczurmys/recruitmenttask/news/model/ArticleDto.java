@@ -1,6 +1,5 @@
 package com.github.szczurmys.recruitmenttask.news.model;
 
-import java.net.URL;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -97,15 +96,14 @@ public class ArticleDto {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("ArticleDto{");
-        sb.append("author='").append(author).append('\'');
-        sb.append(", title='").append(title).append('\'');
-        sb.append(", description='").append(description).append('\'');
-        sb.append(", date=").append(date);
-        sb.append(", sourceName='").append(sourceName).append('\'');
-        sb.append(", articleUrl=").append(articleUrl);
-        sb.append(", imageUrl=").append(imageUrl);
-        sb.append('}');
-        return sb.toString();
+        return "ArticleDto{" +
+                "author='" + author + '\'' +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", date=" + date +
+                ", sourceName='" + sourceName + '\'' +
+                ", articleUrl='" + articleUrl + '\'' +
+                ", imageUrl='" + imageUrl + '\'' +
+                '}';
     }
 }

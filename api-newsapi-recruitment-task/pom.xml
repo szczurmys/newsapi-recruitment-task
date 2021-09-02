@@ -14,18 +14,18 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.0.4.RELEASE</version>
+		<version>2.5.4</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
 	<properties>
 		<start-class>com.github.szczurmys.recruitmenttask.news.ApiNewsApiRecruitmentTaskApplication</start-class>
 
-		<org.mapstruct.version>1.2.0.Final</org.mapstruct.version>
+		<org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<java.version>10</java.version>
+		<java.version>11</java.version>
 	</properties>
 
 	<dependencies>
@@ -35,27 +35,27 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<version>5.7.2</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
 			<groupId>com.github.tomakehurst</groupId>
-			<artifactId>wiremock</artifactId>
-			<version>2.18.0</version>
+			<artifactId>wiremock-jre8</artifactId>
+			<version>2.30.1</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.assertj</groupId>
 			<artifactId>assertj-core</artifactId>
-			<version>3.10.0</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.revinate</groupId>
-			<artifactId>assertj-json</artifactId>
-			<version>1.2.0</version>
+			<version>3.20.2</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-core</artifactId>
-			<version>2.21.0</version>
+			<version>3.12.4</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -85,7 +85,7 @@
 
 		<dependency>
 			<groupId>org.mapstruct</groupId>
-			<artifactId>mapstruct-jdk8</artifactId>
+			<artifactId>mapstruct</artifactId>
 			<version>${org.mapstruct.version}</version>
 		</dependency>
 		<dependency>
@@ -170,7 +170,7 @@
 			<plugin>
 				<groupId>com.spotify</groupId>
 				<artifactId>dockerfile-maven-plugin</artifactId>
-				<version>1.4.3</version>
+				<version>1.4.13</version>
 				<configuration>
 					<skip>false</skip>
 					<repository>szczurmys/newsapi-recruitment-task</repository>
@@ -201,7 +201,7 @@
 						</goals>
 						<configuration>
 							<skip>false</skip>
-							<excludedGroups>com.github.szczurmys.recruitmenttask.IntegrationTestCategory</excludedGroups>
+							<excludedGroups>IntegrationTest</excludedGroups>
 						</configuration>
 					</execution>
 					<execution>
@@ -212,7 +212,7 @@
 						</goals>
 						<configuration>
 							<skip>false</skip>
-							<groups>com.github.szczurmys.recruitmenttask.IntegrationTestCategory</groups>
+							<groups>IntegrationTest</groups>
 						</configuration>
 					</execution>
 				</executions>

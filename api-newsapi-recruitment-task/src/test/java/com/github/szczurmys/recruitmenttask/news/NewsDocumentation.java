@@ -1,6 +1,5 @@
 package com.github.szczurmys.recruitmenttask.news;
 
-import com.github.szczurmys.recruitmenttask.IntegrationTestCategory;
 import com.github.szczurmys.recruitmenttask.news.client.NewsClient;
 import com.github.szczurmys.recruitmenttask.news.client.model.NewsApiResponse;
 import com.github.szczurmys.recruitmenttask.news.exceptions.ErrorCode;
@@ -8,24 +7,21 @@ import com.github.szczurmys.recruitmenttask.news.exceptions.NewsApiClientExcepti
 import com.github.szczurmys.recruitmenttask.news.exceptions.RecruitmentTaskException;
 import com.github.szczurmys.recruitmenttask.news.model.ArticleDto;
 import com.github.szczurmys.recruitmenttask.news.model.ArticlesDto;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.experimental.categories.Category;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.restdocs.JUnitRestDocumentation;
+import org.springframework.restdocs.RestDocumentationContextProvider;
+import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.restdocs.operation.OperationResponse;
 import org.springframework.restdocs.operation.preprocess.OperationResponsePreprocessor;
 import org.springframework.restdocs.operation.preprocess.Preprocessors;
 import org.springframework.restdocs.payload.JsonFieldType;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Mono;
 
@@ -42,13 +38,9 @@ import static org.springframework.restdocs.webtestclient.WebTestClientRestDocume
 import static org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation.documentationConfiguration;
 
 
-@SpringBootApplication
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = {NewsDocumentation.class, NewsController.class}, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class NewsDocumentation {
-
-    @Rule
-    public final JUnitRestDocumentation restDocumentation = new JUnitRestDocumentation();
+@ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+class NewsDocumentation {
 
     @MockBean
     private NewsClient newsClient;
@@ -56,13 +48,11 @@ public class NewsDocumentation {
     @MockBean
     private ArticleMapper articleMapper;
 
-    @Autowired
-    private ApplicationContext context;
-
     private WebTestClient webTestClient;
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    public void setUp(ApplicationContext context,
+                      RestDocumentationContextProvider restDocumentation) {
         this.webTestClient = WebTestClient.bindToApplicationContext(context)
                 .configureClient().baseUrl("https://api.example.com")
                 .filter(documentationConfiguration(restDocumentation))
@@ -70,7 +60,7 @@ public class NewsDocumentation {
     }
 
     @Test
-    public void getArticles() throws Exception {
+    void getArticles() {
         String country = "pl";
         String category = "technology";
 
@@ -102,7 +92,7 @@ public class NewsDocumentation {
         );
 
         webTestClient.get().uri("/news/{country}/{category}", country, category)
-                .accept(MediaType.APPLICATION_JSON_UTF8, MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON, MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody()
@@ -156,12 +146,10 @@ public class NewsDocumentation {
                                 )
                         )
                 );
-
-        return;
     }
 
     @Test
-    public void getArticlesWithServerException() throws Exception {
+    void getArticlesWithServerException() {
         String country = "pl";
         String category = "technology";
 
@@ -172,7 +160,7 @@ public class NewsDocumentation {
 
 
         webTestClient.get().uri("/news/{country}/{category}", country, category)
-                .accept(MediaType.APPLICATION_JSON_UTF8, MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON, MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus().is4xxClientError()
                 .expectBody()
@@ -194,12 +182,10 @@ public class NewsDocumentation {
                                 )
                         )
                 );
-
-        return;
     }
 
     @Test
-    public void getArticlesWithNewsApiException() throws Exception {
+    void getArticlesWithNewsApiException() {
         String country = "pl";
         String category = "technology";
 
@@ -211,7 +197,7 @@ public class NewsDocumentation {
 
 
         webTestClient.get().uri("/news/{country}/{category}", country, category)
-                .accept(MediaType.APPLICATION_JSON_UTF8, MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON, MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus().is4xxClientError()
                 .expectBody()
@@ -236,12 +222,10 @@ public class NewsDocumentation {
                                 )
                         )
                 );
-
-        return;
     }
 
     @Test
-    public void getArticlesWithUnknownException() throws Exception {
+    void getArticlesWithUnknownException() {
         String country = "pl";
         String category = "technology";
 
@@ -251,7 +235,7 @@ public class NewsDocumentation {
 
 
         webTestClient.get().uri("/news/{country}/{category}", country, category)
-                .accept(MediaType.APPLICATION_JSON_UTF8, MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON, MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus().is5xxServerError()
                 .expectBody()
@@ -273,8 +257,6 @@ public class NewsDocumentation {
                                 )
                         )
                 );
-
-        return;
     }
 
 }

@@ -101,15 +101,14 @@ public class NewsApiArticle {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("NewsApiArticle{");
-        sb.append("source=").append(source);
-        sb.append(", author='").append(author).append('\'');
-        sb.append(", title='").append(title).append('\'');
-        sb.append(", description='").append(description).append('\'');
-        sb.append(", url='").append(url).append('\'');
-        sb.append(", urlToImage='").append(urlToImage).append('\'');
-        sb.append(", publishedAt=").append(publishedAt);
-        sb.append('}');
-        return sb.toString();
+        return "NewsApiArticle{" +
+                "source=" + source +
+                ", author='" + author + '\'' +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", url='" + url + '\'' +
+                ", urlToImage='" + urlToImage + '\'' +
+                ", publishedAt=" + publishedAt +
+                '}';
     }
 }

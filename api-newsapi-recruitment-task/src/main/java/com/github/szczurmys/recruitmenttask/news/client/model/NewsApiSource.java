@@ -32,9 +32,8 @@ public class NewsApiSource {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("NewsApiSource{");
-        sb.append("name='").append(name).append('\'');
-        sb.append('}');
-        return sb.toString();
+        return "NewsApiSource{" +
+                "name='" + name + '\'' +
+                '}';
     }
 }

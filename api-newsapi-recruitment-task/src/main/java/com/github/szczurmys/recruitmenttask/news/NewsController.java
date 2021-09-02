@@ -1,6 +1,5 @@
 package com.github.szczurmys.recruitmenttask.news;
 
-
 import com.github.szczurmys.recruitmenttask.news.client.NewsClient;
 import com.github.szczurmys.recruitmenttask.news.exceptions.ErrorCode;
 import com.github.szczurmys.recruitmenttask.news.exceptions.NewsApiClientException;
@@ -24,8 +23,8 @@ import java.util.Map;
 public class NewsController {
     private static final Logger logger = LoggerFactory.getLogger(NewsController.class);
 
-    private NewsClient client;
-    private ArticleMapper articleMapper;
+    private final NewsClient client;
+    private final ArticleMapper articleMapper;
 
     @Autowired
     public NewsController(NewsClient client, ArticleMapper articleMapper) {
@@ -34,7 +33,7 @@ public class NewsController {
     }
 
     @GetMapping(value = "/news/{country}/{category}",
-            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+            produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<ArticlesDto>> getArticles(
             @PathVariable(value = "country") final String country,
             @PathVariable(value = "category") final String category

@@ -1,7 +1,6 @@
 package com.github.szczurmys.recruitmenttask.news.client;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.szczurmys.recruitmenttask.news.client.model.NewsApiResponse;
 import com.github.szczurmys.recruitmenttask.news.exceptions.ErrorCode;
 import com.github.szczurmys.recruitmenttask.news.exceptions.NewsApiClientException;
@@ -10,29 +9,24 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.reactive.function.client.WebClientResponseException;
 import reactor.core.publisher.Mono;
-
-import java.io.IOException;
 
 @Component
 public class NewsApiRestClient implements NewsClient {
     private static final Logger logger = LoggerFactory.getLogger(NewsApiRestClient.class);
 
-    private WebClient client;
-    private NewsApiProperties configuration;
-    private ObjectMapper objectMapper;
+    private final WebClient client;
+    private final NewsApiProperties configuration;
 
     @Autowired
     public NewsApiRestClient(@Qualifier("newsApiWebClient") WebClient client,
-                             NewsApiProperties configuration,
-                             ObjectMapper objectMapper) {
+                             NewsApiProperties configuration) {
         this.client = client;
         this.configuration = configuration;
-        this.objectMapper = objectMapper;
     }
 
     @Override
@@ -46,23 +40,24 @@ public class NewsApiRestClient implements NewsClient {
 
         return client.get()
                 .uri("/v2/top-headlines?country={country}&category={category}", country, category)
-                .accept(MediaType.APPLICATION_JSON_UTF8)
+                .accept(MediaType.APPLICATION_JSON)
                 .header("Authorization", "Bearer " + token)
                 .retrieve()
-                .bodyToMono(NewsApiResponse.class)
-                .onErrorResume(WebClientResponseException.class, e -> {
-                    try {
-                        JsonNode actualObj = objectMapper.readTree(e.getResponseBodyAsByteArray());
-                        String code = actualObj.get("code").asText();
-                        String message = actualObj.get("message").asText();
-                        throw new NewsApiClientException(e.getStatusCode(), code, message, e);
-                    } catch (IOException ex) {
-                        logger.error("Error when try parse GitHub error body response.", ex);
-                        throw new NewsApiClientException(e.getStatusCode(),
-                                ErrorCode.ERROR_WHEN_TRY_READ_ERROR_MESSAGE,
-                                ex.getMessage(),
-                                e);
-                    }
-                });
+                .onStatus(HttpStatus::isError, clientResponse -> clientResponse
+                        .bodyToMono(JsonNode.class)
+                        .map(node -> {
+                            String code = node.get("code").asText();
+                            String message = node.get("message").asText();
+                            return new NewsApiClientException(clientResponse.statusCode(), code, message);
+                        })
+                        .onErrorResume(Exception.class, e -> {
+                            logger.error("Error when try parse GitHub error body response.", e);
+                            return Mono.just(new NewsApiClientException(clientResponse.statusCode(),
+                                    ErrorCode.ERROR_WHEN_TRY_READ_ERROR_MESSAGE,
+                                    e.getMessage(),
+                                    e));
+                        })
+                )
+                .bodyToMono(NewsApiResponse.class);
     }
 }

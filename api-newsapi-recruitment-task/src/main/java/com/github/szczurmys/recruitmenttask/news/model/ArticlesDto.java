@@ -53,11 +53,10 @@ public class ArticlesDto {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("ArticlesDto{");
-        sb.append("country='").append(country).append('\'');
-        sb.append(", category='").append(category).append('\'');
-        sb.append(", articles=").append(articles);
-        sb.append('}');
-        return sb.toString();
+        return "ArticlesDto{" +
+                "country='" + country + '\'' +
+                ", category='" + category + '\'' +
+                ", articles=" + articles +
+                '}';
     }
 }

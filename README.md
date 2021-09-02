@@ -13,7 +13,7 @@ Options:
 4. Run application in docker
     * build docker image: `mvn clean package dockerfile:build`
     * run image: `szczurmys/newsapi-recruitment-task:0.0.1-SNAPSHOT` <br />
-    e.g. `docker run -p 8080:8080 -e NEWSAPI_TOKEN=a0b1c2d3e4f5g6h7i9j -it szczurmys/newsapi-recruitment-task:0.0.1-SNAPSHOT`  <br />
+    e.g. `docker run --init -p 8080:8080 -e NEWSAPI_TOKEN=a0b1c2d3e4f5g6h7i9j -it szczurmys/newsapi-recruitment-task:0.0.1-SNAPSHOT`  <br />
     Available environment arguments:
       * **NEWSAPI_API_URL** - value for application parameter **newsapi.newsApiUrl**
       * **NEWSAPI_TOKEN** - required; value for application parameter **newsapi.authToken**
